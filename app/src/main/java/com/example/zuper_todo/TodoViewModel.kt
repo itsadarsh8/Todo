@@ -17,6 +17,10 @@ class TodoViewModel(
     var todoPage = 1
     var limit = 15
 
+    val searchTodoLiveData:MutableLiveData<Resource<TodoResponse>> = MutableLiveData()
+    var searchTodoPage = 1
+    var searchLimit = 15
+
     init{
         getTodo(author = "Ranjith")
     }
@@ -27,7 +31,23 @@ class TodoViewModel(
         todoLiveData.postValue(handleTodoResponse(response))
     }
 
+    fun searchTodo(searchQuery: String) = viewModelScope.launch {
+        searchTodoLiveData.postValue(Resource.Loading())
+        val response= todoRepository.searchTodo(todoPage,limit, searchQuery)
+        todoLiveData.postValue(handleTodoResponse(response))
+    }
+
+
     private fun handleTodoResponse(response: Response<TodoResponse>):Resource<TodoResponse>{
+        if(response.isSuccessful){
+            response.body()?.let{resultResponse->
+                return Resource.Success(resultResponse)
+            }
+        }
+        return Resource.Error(response.message())
+    }
+
+    private fun handleSearchTodoResponse(response: Response<TodoResponse>):Resource<TodoResponse>{
         if(response.isSuccessful){
             response.body()?.let{resultResponse->
                 return Resource.Success(resultResponse)

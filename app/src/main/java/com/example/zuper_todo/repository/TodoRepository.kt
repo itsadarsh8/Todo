@@ -8,4 +8,7 @@ class TodoRepository(
 ) {
         suspend fun getTodos(pageNumber: Int, limit: Int, author: String)=
             RetrofitInstance.api.getTodos(pageNumber,limit,author)
+
+    suspend fun searchTodo(pageNumber: Int, limit: Int,searchQuery: String)=
+        RetrofitInstance.api.searchForTodo(pageNumber,limit,searchQuery)
 }
