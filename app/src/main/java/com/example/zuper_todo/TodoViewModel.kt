@@ -20,6 +20,7 @@ class TodoViewModel(
     val searchTodoLiveData:MutableLiveData<Resource<TodoResponse>> = MutableLiveData()
     var searchTodoPage = 1
     var searchLimit = 15
+    var searchAuthor = "Ranjith"
 
     init{
         getTodo(author = "Ranjith")
@@ -33,7 +34,7 @@ class TodoViewModel(
 
     fun searchTodo(searchQuery: String) = viewModelScope.launch {
         searchTodoLiveData.postValue(Resource.Loading())
-        val response= todoRepository.searchTodo(todoPage,limit, searchQuery)
+        val response= todoRepository.searchTodo(todoPage,limit,searchAuthor, searchQuery)
         todoLiveData.postValue(handleTodoResponse(response))
     }
 
