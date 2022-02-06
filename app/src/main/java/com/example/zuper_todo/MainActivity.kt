@@ -3,6 +3,8 @@ package com.example.zuper_todo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.EditText
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,7 +12,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.zuper_todo.adapters.TodoAdapter
 import com.example.zuper_todo.db.TodoDatabase
 import com.example.zuper_todo.repository.TodoRepository
+import com.example.zuper_todo.utils.Constants.SEARCH_TODO_TIME_DELAY
 import com.example.zuper_todo.utils.Resource
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     lateinit var viewModel: TodoViewModel
@@ -18,6 +25,9 @@ class MainActivity : AppCompatActivity() {
 
     private val rvTodo by lazy{
         findViewById<RecyclerView>(R.id.rvTodo)
+    }
+    private val searchBar by lazy{
+        findViewById<EditText>(R.id.searchBar)
     }
 
     val TAG = "MainActivity"
@@ -54,6 +64,23 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
+
+        var job: Job?=null
+        searchBar.addTextChangedListener{editable ->
+            job?.cancel()
+            job= MainScope().launch{
+                delay(SEARCH_TODO_TIME_DELAY)
+
+                editable?.let{
+                    if(editable.toString().isNotEmpty()){
+                        viewModel.searchTodo(editable.toString())
+                    }
+                    else{
+                        viewModel.getTodo("Ranjith")
+                    }
+                }
+            }
+        }
     }
     private fun hideProgressBar(){
         // TODO  hide progress bar

@@ -16,4 +16,14 @@ interface TodoAPI {
 
     ):Response<TodoResponse>
 
+    @GET ("todo")
+    suspend fun searchForTodo(
+
+        @Query("_page") pageNumber:Int =1,
+        @Query("_limit") limit:Int= 15,
+        @Query("author") author:String= "Ranjith",
+        @Query("tag") tag:String
+
+    ):Response<TodoResponse>
+
 }
