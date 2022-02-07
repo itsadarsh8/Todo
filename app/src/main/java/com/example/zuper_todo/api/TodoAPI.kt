@@ -1,6 +1,5 @@
 package com.example.zuper_todo.api
 
-import com.example.zuper_todo.models.BaseResponse
 import com.example.zuper_todo.models.TodoInfoData
 import com.example.zuper_todo.models.TodoResponse
 import com.example.zuper_todo.utils.Constants.AUTHOR_NAME
@@ -28,6 +27,9 @@ interface TodoAPI {
         @Query("tag") tag:String
 
     ):Response<TodoResponse>
+
+    @PUT("todo/{id}")
+    fun toggleStatus(@Path("id")id:Int, @Body todoData:TodoInfoData):Call<TodoInfoData>
 
 
     @POST ("todo")
