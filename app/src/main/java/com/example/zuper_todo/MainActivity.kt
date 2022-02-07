@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.AbsListView
+import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
@@ -12,11 +13,17 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.zuper_todo.adapters.TodoAdapter
+import com.example.zuper_todo.api.RestApiService
 import com.example.zuper_todo.db.TodoDatabase
+import com.example.zuper_todo.models.TodoInfoData
 import com.example.zuper_todo.repository.TodoRepository
+import com.example.zuper_todo.utils.Constants.AUTHOR_NAME
 import com.example.zuper_todo.utils.Constants.QUERY_PAGE_SIZE
 import com.example.zuper_todo.utils.Constants.SEARCH_TODO_TIME_DELAY
 import com.example.zuper_todo.utils.Resource
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import kotlinx.android.synthetic.main.bottom_sheet_dialog.*
+import kotlinx.android.synthetic.main.bottom_sheet_dialog.view.*
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
@@ -31,6 +38,9 @@ class MainActivity : AppCompatActivity() {
     }
     private val searchBar by lazy{
         findViewById<EditText>(R.id.searchBar)
+    }
+    private val btnBottomSheet by lazy{
+        findViewById<Button>(R.id.buttonBottomSheet)
     }
 
     val TAG = "MainActivity"
@@ -88,11 +98,55 @@ class MainActivity : AppCompatActivity() {
 
                     }
                     else{
-                        viewModel.getTodo("Ranjith")
+                        viewModel.getTodo(AUTHOR_NAME)
                     }
                 }
             }
         }
+
+        btnBottomSheet.setOnClickListener{
+            val dialog= BottomSheetDialog(this)
+            val view= layoutInflater.inflate(R.layout.bottom_sheet_dialog,null)
+            val btnClose= view.findViewById<Button>(R.id.createButton)
+//            val titleField=view.findViewById<EditText>(R.id.titleField)
+//            val tagField=view.findViewWithTag<EditText>(R.id.tagField)
+            btnClose.setOnClickListener{
+                if(view.titleField.text.isEmpty() || view.tagField.text.isEmpty()){
+                 Toast.makeText(this,"All fields are required",Toast.LENGTH_SHORT).show()
+                }else {
+                    createTodo(
+                        view.titleField.text.toString(),
+                        AUTHOR_NAME,
+                        view.tagField.text.toString(),
+                        false,
+                        "HIGH"
+                    )
+
+                    dialog.dismiss()
+                }
+
+
+
+            }
+            dialog.setContentView(view)
+            dialog.show()
+        }
+
+    }
+
+     fun createTodo(title:String, author:String,tag:String,isCompleted:Boolean,priority:String){
+        val apiService=RestApiService()
+        val todoIndoData=TodoInfoData(title,author,tag,isCompleted,priority,null)
+
+        apiService.createTodo(todoIndoData) {
+            if (it?.id != null){
+
+            }else{
+                Log.e(TAG,"Error creating new TODO")
+            }
+        }
+
+
     }
 
     private fun hideProgressBar(){

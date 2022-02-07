@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.zuper_todo.models.TodoResponse
 import com.example.zuper_todo.repository.TodoRepository
+import com.example.zuper_todo.utils.Constants.AUTHOR_NAME
 import com.example.zuper_todo.utils.Resource
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -31,11 +32,11 @@ class TodoViewModel(
     val searchTodoLiveData:MutableLiveData<Resource<TodoResponse>> = MutableLiveData()
     var searchTodoPage = 1
     var searchLimit = 1500
-    var searchAuthor = "Ranjith"
+    var searchAuthor = AUTHOR_NAME
     var searchTodoResponse: TodoResponse?=null
 
     init{
-        getTodo(author = "Ranjith")
+        getTodo(author = AUTHOR_NAME)
     }
 
     fun getTodo(author: String) = viewModelScope.launch {
@@ -47,6 +48,10 @@ class TodoViewModel(
         safeSearchTodoCall(searchQuery)
 
     }
+//    fun createTodo(title:String, author:String,tag:String,is_complete:Boolean,priority:String) = viewModelScope.launch {
+//        safeCreateTodo(title,author,tag,is_complete,priority)
+//
+//    }
 
 
     private fun handleTodoResponse(response: Response<TodoResponse>):Resource<TodoResponse>{
@@ -74,6 +79,7 @@ class TodoViewModel(
         }
         return Resource.Error(response.message())
     }
+
 
     private suspend fun safeSearchTodoCall(searchQuery: String){
         searchTodoLiveData.postValue(Resource.Loading())
@@ -108,6 +114,23 @@ class TodoViewModel(
             }
         }
     }
+//
+//    private suspend fun safeCreateTodo(title:String, author:String,tag:String,is_complete:Boolean,priority:String){
+//        todoLiveData.postValue(Resource.Loading())
+//        try{
+//            if(hasInternetConnection()) {
+//                val response = todoRepository.createTodo(title,author,tag,is_complete,priority)
+//                todoLiveData.postValue(handleSearchTodoResponse(response))
+//            }else{
+//                todoLiveData.postValue(Resource.Error("No internet connection"))
+//            }
+//        } catch(t: Throwable){
+//            when(t){
+//                is IOException -> todoLiveData.postValue(Resource.Error("Network Failure"))
+//                else -> todoLiveData.postValue(Resource.Error("Conversion Error"))
+//            }
+//        }
+//    }
 
     private fun hasInternetConnection():Boolean{
         val connectivityManager=getApplication<TodoApplication>().getSystemService(
