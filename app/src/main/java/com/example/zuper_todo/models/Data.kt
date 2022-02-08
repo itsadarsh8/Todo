@@ -12,7 +12,7 @@ data class Data(
     @PrimaryKey
     val id:Int,
     val author: String,
-    val is_completed: Boolean,
+    var is_completed: Boolean,
     val priority: String,
     val tag: String,
     val title: String
