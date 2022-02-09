@@ -19,12 +19,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.zuper_todo.adapters.CustomDropDownAdapter
 import com.example.zuper_todo.adapters.TodoAdapter
 import com.example.zuper_todo.api.RestApiService
+import com.example.zuper_todo.api.RetrofitInstance
 import com.example.zuper_todo.db.TodoDatabase
 import com.example.zuper_todo.models.Data
 import com.example.zuper_todo.models.DropDownModel
 import com.example.zuper_todo.models.TodoInfoData
+import com.example.zuper_todo.models.TodoResponse
 import com.example.zuper_todo.repository.TodoRepository
 import com.example.zuper_todo.utils.Constants.AUTHOR_NAME
+import com.example.zuper_todo.utils.Constants.INTENT_TAG
 import com.example.zuper_todo.utils.Constants.QUERY_PAGE_SIZE
 import com.example.zuper_todo.utils.Constants.SEARCH_TODO_TIME_DELAY
 import com.example.zuper_todo.utils.Resource
@@ -35,10 +38,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.bottom_sheet_dialog.*
 import kotlinx.android.synthetic.main.bottom_sheet_dialog.view.*
 import kotlinx.android.synthetic.main.cutom_title_bar.*
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 class MainActivity : AppCompatActivity() {
     lateinit var viewModel: TodoViewModel
@@ -137,8 +137,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         tags_activity.setOnClickListener(View.OnClickListener {
-            val intent= Intent(this,TagsActivity::class.java)
-            startActivity(intent)
+            CoroutineScope(Dispatchers.IO).launch {
+                val todoList=getAllTodos()!!.data as ArrayList<Data>
+                val intent = Intent(this@MainActivity, TagsActivity::class.java)
+                intent.putExtra(INTENT_TAG,todoList)
+                startActivity(intent)
+            }
         })
 
     }
@@ -259,5 +263,10 @@ class MainActivity : AppCompatActivity() {
             addOnScrollListener(this@MainActivity.scrollListener)
         }
 
+    }
+
+    suspend fun getAllTodos(): TodoResponse? {
+        val todoList: TodoResponse? = RetrofitInstance.api.getAllTodos(1,1500,"Adarsh").body()
+        return todoList
     }
 }

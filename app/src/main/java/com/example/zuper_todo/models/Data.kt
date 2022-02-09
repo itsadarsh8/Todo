@@ -2,6 +2,7 @@ package com.example.zuper_todo.models
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import java.io.Serializable
 
 //Setting room
 @Entity(
@@ -16,4 +17,4 @@ data class Data(
     val priority: String,
     val tag: String,
     val title: String
-)
+):Serializable

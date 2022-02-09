@@ -22,6 +22,8 @@
         <entry key="app/src/main/res/layout/bottom_sheet_dialog.xml" value="0.4973958333333333" />
         <entry key="app/src/main/res/layout/cutom_title_bar.xml" value="0.38333333333333336" />
         <entry key="app/src/main/res/layout/spinner_layout.xml" value="0.29322916666666665" />
+        <entry key="app/src/main/res/layout/tags_child_item.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/tags_parent_item.xml" value="0.375" />
         <entry key="app/src/main/res/layout/todo_single_item.xml" value="0.5256673511293635" />
       </map>
     </option>
@@ -31,5 +33,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.45" />
+      </ProjectState>
+    </option>
   </component>
 </project>
