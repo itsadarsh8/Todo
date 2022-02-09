@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.4351851851851852" />
+        <entry key="app/src/main/res/drawable/ic_baseline_arrow_back_24.xml" value="0.32916666666666666" />
         <entry key="app/src/main/res/drawable/ic_baseline_search_24.xml" value="0.3328125" />
         <entry key="app/src/main/res/drawable/ic_checked.xml" value="0.3328125" />
         <entry key="app/src/main/res/drawable/ic_high_priority.xml" value="0.4276041666666667" />
@@ -20,8 +21,11 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.45" />
         <entry key="app/src/main/res/layout/activity_tags.xml" value="0.38333333333333336" />
         <entry key="app/src/main/res/layout/bottom_sheet_dialog.xml" value="0.4973958333333333" />
+        <entry key="app/src/main/res/layout/content_tags.xml" value="0.3171875" />
         <entry key="app/src/main/res/layout/cutom_title_bar.xml" value="0.38333333333333336" />
+        <entry key="app/src/main/res/layout/fragment_first.xml" value="0.4973958333333333" />
         <entry key="app/src/main/res/layout/spinner_layout.xml" value="0.29322916666666665" />
+        <entry key="app/src/main/res/layout/tag_activity_custom_title_bar.xml" value="0.1522289766970618" />
         <entry key="app/src/main/res/layout/tags_child_item.xml" value="0.375" />
         <entry key="app/src/main/res/layout/tags_parent_item.xml" value="0.375" />
         <entry key="app/src/main/res/layout/todo_single_item.xml" value="0.5256673511293635" />
