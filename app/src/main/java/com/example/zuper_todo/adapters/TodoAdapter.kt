@@ -120,6 +120,10 @@ class TodoAdapter: RecyclerView.Adapter<TodoAdapter.TodosViewHolder>() {
         return differ.currentList.size
     }
 
+    public fun submitList(list:ArrayList<Data>){
+        differ.submitList(list)
+    }
+
 
     private  fun toggleStatus(todo:Data,isCompleted:Boolean){
 
