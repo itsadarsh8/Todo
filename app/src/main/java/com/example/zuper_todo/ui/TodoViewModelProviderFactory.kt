@@ -1,4 +1,4 @@
-package com.example.zuper_todo
+package com.example.zuper_todo.ui
 
 import android.app.Application
 import androidx.lifecycle.ViewModel

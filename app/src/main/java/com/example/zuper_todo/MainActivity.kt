@@ -1,6 +1,5 @@
 package com.example.zuper_todo
 
-import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,9 +7,6 @@ import android.util.Log
 import android.view.View
 import android.view.Window
 import android.widget.*
-import androidx.constraintlayout.motion.widget.OnSwipe
-import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityCompat.recreate
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -26,6 +22,8 @@ import com.example.zuper_todo.models.DropDownModel
 import com.example.zuper_todo.models.TodoInfoData
 import com.example.zuper_todo.models.TodoResponse
 import com.example.zuper_todo.repository.TodoRepository
+import com.example.zuper_todo.ui.TodoViewModel
+import com.example.zuper_todo.ui.TodoViewModelProviderFactory
 import com.example.zuper_todo.utils.Constants.AUTHOR_NAME
 import com.example.zuper_todo.utils.Constants.INTENT_TAG
 import com.example.zuper_todo.utils.Constants.QUERY_PAGE_SIZE
@@ -67,7 +65,7 @@ class MainActivity : AppCompatActivity() {
 
 
         val todoRepository=TodoRepository(TodoDatabase(this))
-        val viewModelProviderFactory=TodoViewModelProviderFactory(application, todoRepository)
+        val viewModelProviderFactory= TodoViewModelProviderFactory(application, todoRepository)
         viewModel=ViewModelProvider(this, viewModelProviderFactory).get(TodoViewModel::class.java)
         setupRecyclerView()
 
@@ -85,7 +83,10 @@ class MainActivity : AppCompatActivity() {
 
                     }
                     else{
-                        viewModel.getTodo(AUTHOR_NAME)
+                        CoroutineScope(Dispatchers.IO).launch {
+                            val todoList: TodoResponse? = RetrofitInstance.api.getAllTodos(1,1500,"Adarsh").body()
+                            todoAdapter.submitList(todoList!!.data as ArrayList<Data>)
+                        }
 
                     }
                 }
@@ -196,8 +197,10 @@ class MainActivity : AppCompatActivity() {
 
         apiService.createTodo(todoIndoData) {
             if (it?.id != null){
-                finish()
-                startActivity(getIntent())
+                CoroutineScope(Dispatchers.IO).launch {
+                    val todoList: TodoResponse? = RetrofitInstance.api.getAllTodos(1,1500,"Adarsh").body()
+                    todoAdapter.submitList(todoList!!.data as ArrayList<Data>)
+                }
             }else{
                 Log.e(TAG,"Error creating new TODO")
             }

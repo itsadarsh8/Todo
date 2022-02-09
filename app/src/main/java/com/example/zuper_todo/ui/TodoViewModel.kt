@@ -1,4 +1,4 @@
-package com.example.zuper_todo
+package com.example.zuper_todo.ui
 
 import android.app.Application
 import android.content.Context
@@ -6,11 +6,10 @@ import android.net.ConnectivityManager
 import android.net.ConnectivityManager.*
 import android.net.NetworkCapabilities.*
 import android.os.Build
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.zuper_todo.TodoApplication
 import com.example.zuper_todo.models.TodoResponse
 import com.example.zuper_todo.repository.TodoRepository
 import com.example.zuper_todo.utils.Constants.AUTHOR_NAME

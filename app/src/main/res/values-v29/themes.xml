@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="theme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:forceDarkAllowed">false</item>
+        <item name="android:windowNoTitle">false</item>
+        <item name="android:windowTitleBackgroundStyle">@style/themeTitleBackground</item>
+        <item name="android:windowTitleSize">50dip</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/black</item>
+
+    </style>
+</resources>
