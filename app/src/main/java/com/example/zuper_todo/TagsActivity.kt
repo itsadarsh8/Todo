@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
+import android.view.View
+import android.view.Window
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.viewModelScope
 import com.example.zuper_todo.adapters.TagParentAdapter
@@ -15,6 +17,7 @@ import com.example.zuper_todo.models.Data
 import com.example.zuper_todo.models.TagsParentModel
 import com.example.zuper_todo.models.TodoResponse
 import com.example.zuper_todo.utils.Constants.INTENT_TAG
+import kotlinx.android.synthetic.main.tag_activity_custom_title_bar.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -26,7 +29,15 @@ class TagsActivity : AppCompatActivity() {
     private val TAG="TagsActivity"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_tags)
+
+        requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);
+        setContentView(R.layout.activity_main)
+        this.getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.tag_activity_custom_title_bar)
+
+
+        back_button.setOnClickListener(View.OnClickListener {
+            finish()
+        })
         val tagList= mutableListOf<String>()
         val todoParentList= mutableListOf<TagsParentModel>()
 //        CoroutineScope(Dispatchers.IO).launch {
