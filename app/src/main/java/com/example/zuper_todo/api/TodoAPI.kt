@@ -1,6 +1,5 @@
 package com.example.zuper_todo.api
 
-import com.example.zuper_todo.models.BaseResponse
 import com.example.zuper_todo.models.TodoInfoData
 import com.example.zuper_todo.models.TodoResponse
 import com.example.zuper_todo.utils.Constants.AUTHOR_NAME
@@ -20,6 +19,15 @@ interface TodoAPI {
     ):Response<TodoResponse>
 
     @GET ("todo")
+    suspend fun getAllTodos(
+
+        @Query("_page") pageNumber:Int =1,
+        @Query("_limit") limit:Int= 1500,
+        @Query("author") author:String= AUTHOR_NAME
+
+    ):Response<TodoResponse>
+
+    @GET ("todo")
     suspend fun searchForTodo(
 
         @Query("_page") pageNumber:Int =1,
@@ -28,6 +36,9 @@ interface TodoAPI {
         @Query("tag") tag:String
 
     ):Response<TodoResponse>
+
+    @PUT("todo/{id}")
+    fun toggleStatus(@Path("id")id:Int, @Body todoData:TodoInfoData):Call<TodoInfoData>
 
 
     @POST ("todo")

@@ -21,6 +21,22 @@ class RestApiService {
             }
         )
     }
+
+    fun toggleStatus(position:Int,todoInfoData:TodoInfoData,onResult: (TodoInfoData?) -> Unit){
+        RetrofitInstance.api.toggleStatus(position,todoInfoData).enqueue(
+            object :Callback<TodoInfoData>{
+                override fun onFailure(call: Call<TodoInfoData>, t: Throwable) {
+                    onResult(null)
+                }
+
+                override fun onResponse(call: Call<TodoInfoData>, response: Response<TodoInfoData>) {
+                   val toggleStatus=response.body()
+                    onResult(toggleStatus)
+                }
+            }
+        )
+    }
+
 }
 
 

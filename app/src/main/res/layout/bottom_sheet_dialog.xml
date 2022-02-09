@@ -6,43 +6,67 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp"
-        android:orientation="vertical">
-    <EditText
-        android:id="@+id/titleField"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Todo title"
-        android:textSize="12sp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"/>
+        android:background="#00000000"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <View
+            android:layout_width="50dp"
+            android:layout_height="4dp"
+            android:layout_gravity="center"
+            android:background="@drawable/line_layout" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+
+            android:hint="Task name"
+            android:textSize="12sp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/titleField"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/tagField"
-                android:layout_width="100dp"
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
+                android:layout_margin="14dp"
                 android:hint="Tag"
-                android:textSize="12sp"/>
-            <EditText
+                android:textSize="12sp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/tagField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Spinner
                 android:id="@+id/priorityField"
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:hint="Priority"
-                android:textSize="12sp"/>
+                android:layout_width="80dp"
+                android:layout_height="55dp"
+                android:layout_gravity="center"
+                android:background="@drawable/spinner_background_layout" />
+
             <Button
                 android:id="@+id/createButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="14dp"
                 android:text="CREATE"
-                android:textSize="12sp"
-                android:layout_marginLeft="8dp"/>
+                android:layout_gravity="center"
+                android:textSize="12sp" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.appcompat.widget.LinearLayoutCompat>

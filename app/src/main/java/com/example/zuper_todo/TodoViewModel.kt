@@ -6,6 +6,7 @@ import android.net.ConnectivityManager
 import android.net.ConnectivityManager.*
 import android.net.NetworkCapabilities.*
 import android.os.Build
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -41,8 +42,8 @@ class TodoViewModel(
 
     fun getTodo(author: String) = viewModelScope.launch {
         safeTodoCall(author)
-
     }
+
 
     fun searchTodo(searchQuery: String) = viewModelScope.launch {
         safeSearchTodoCall(searchQuery)
